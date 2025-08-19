@@ -3,6 +3,7 @@ import { EventService } from '../../services/event-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'app-event-form',
@@ -17,7 +18,7 @@ export class EventForm {
   ) { }
 
   aForm: FormGroup = new FormGroup({});
-
+  eventData: Event = new Event();
   ngOnInit() {
     this.aForm = new FormGroup(
       {
@@ -30,6 +31,12 @@ export class EventForm {
       },
       { validators: this.dateValidator } // Ajout du validateur global
     );
+
+    this.route.queryParams.subscribe(params => {
+      if (params['id']) {
+        this.loadEventData(params['id']);
+      }
+    });
   }
 
   // Validateur personnalisé pour vérifier les dates
@@ -43,9 +50,18 @@ export class EventForm {
     return null;
   }
   
+  loadEventData(id: number) {
+    this.event.getEvent(id).subscribe(data => {
+      this.eventData = data;
+      this.aForm!.patchValue(data);
+      
+      console.log(this.aForm!.value);
+      console.log(this.aForm!.valid);
+      
+    });
+  } 
 
-
-  addEvent() {
+  /*addEvent() {
     this.event.addEvent(this.aForm.value).subscribe({
       next: (data) => {
         // Affiche un message success avec SweetAlert2
@@ -80,7 +96,73 @@ export class EventForm {
         }
       }
     });
+  }*/
+  
+  addEvent() {
+    if (this.aForm!.valid) {
+      const Data = this.aForm!.value;
+  
+      // Vérifier si on est en mode update ou ajout
+      if (this.eventData.id) {
+        // Mode Update
+        this.event.updateEvent(Data,this.eventData.id).subscribe({
+          next: () => {
+            Swal.fire(
+              'Your informations!',
+              'Event updated successfully ✅',
+              'success'
+            );
+            this.router.navigate(['/listEvents']);
+          },
+          error: (err) => {
+            console.error("Erreur lors de la mise à jour :", err);
+            Swal.fire(
+              'Error!',
+              err.error.message || 'An error occurred while updating event.',
+              'error'
+            );
+          }
+        });
+  
+      } else {
+        // Mode Add
+        this.event.addEvent(Data).subscribe({
+          next: (data) => {
+            Swal.fire(
+              'Your informations!',
+              'Event added successfully 🎉',
+              'success'
+            );
+  
+            console.log("Event added:", data);
+            this.router.navigate(['/listEvents']);
+          },
+          error: (err) => {
+            if (err.status === 409 || err.status === 500) {
+              Swal.fire(
+                'Conflict!',
+                err.error.message,
+                'error'
+              );
+            } else {
+              Swal.fire(
+                'Invalid form',
+                'Please complete all required fields correctly.',
+                'warning'
+              );
+            }
+          }
+        });
+      }
+    } else {
+      Swal.fire(
+        'Invalid form',
+        'Please complete all required fields correctly.',
+        'warning'
+      );
+    }
   }
+  
   
   
 }

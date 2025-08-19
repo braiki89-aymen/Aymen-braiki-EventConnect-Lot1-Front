@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { EventService } from '../../services/event-service';
 import { Event } from '../../models/event';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events',
@@ -11,14 +12,14 @@ import Swal from 'sweetalert2';
 })
 export class Events {
 
-  constructor(private event : EventService) { }
+  constructor(private event : EventService, private router: Router,) { }
 
   events: Event[] = [];
   currentPage: number = 0;
   totalPages: number = 0;
   itemsPerPage: number = 3;
   isLoading: boolean = false;
-
+  searchTerm: string = '';
 
   ngOnInit() {
     this.loadEvents();
@@ -58,5 +59,54 @@ export class Events {
     this.goToPage(this.currentPage - 1);
   }
 
+  filteredEvents() {
+    if (!this.searchTerm) {
+      return this.events;
+    }
+    return this.events.filter(e =>
+      e.title.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      e.description.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+      e.place.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 
+editEvent(id: number) {
+    this.router.navigate([''], { queryParams: { id: id } });
+  } 
+  
+   deleteEvent(id: number) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.event.deleteEvent(id).subscribe({
+          next: () => {
+            this.loadEvents();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+          },
+          error: (err) => {
+            console.error('Error deleting Event:', err);
+            Swal.fire({
+              title: "Error!",
+              text: "Failed to delete the Event.",
+              icon: "error"
+            });
+          }
+        });
+      }
+    });
+  }
+  
+  
+  
 }
