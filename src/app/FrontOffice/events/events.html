@@ -1,0 +1,77 @@
+<section class="schedule-section spad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title">
+            <h2>Our Schedule</h2>
+            <p>Do not miss any topic about the event</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="schedule-tab">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item" *ngFor="let event of events; let i = index">
+                <a class="nav-link" [class.active]="i === 0" data-toggle="tab" href="#tab-{{i}}" role="tab">
+                  <h5>Day {{i + 1}}</h5>
+                  <p>{{ event.startDate | date:'MMM dd, yyyy' }}</p>
+                </a>
+              </li>
+            </ul>
+  
+            <div class="tab-content">
+              <div class="tab-pane" [class.active]="i === 0" id="tab-{{i}}" role="tabpanel" *ngFor="let event of events; let i = index">
+                <div class="st-content">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-lg-3">
+                        <div class="sc-pic">
+                          <img src="assets/FrontOffice/img/schedule/schedule-{{i+1}}.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="col-lg-5">
+                        <div class="sc-text">
+                          <h4>{{ event.title }}</h4>
+                          <ul>
+                            <li><i class="fa fa-user"></i> Organizer</li>
+                            <li><i class="fa fa-envelope"></i> organizer@example.com</li>
+                          </ul>
+                          <p>{{ event.description }}</p>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <ul class="sc-widget">
+                          <li><i class="fa fa-clock-o"></i> {{ event.startDate | date:'hh:mm a' }} - {{ event.endDate | date:'hh:mm a' }}</li>
+                          <li><i class="fa fa-map-marker"></i> {{ event.place }}</li>
+                          <li><i class="fa fa-users"></i> Max Capacity: {{ event.capacityMax }}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> <!-- tab-pane -->
+            </div> <!-- tab-content -->
+  
+            <!-- Pagination -->
+            <nav *ngIf="totalPages > 1">
+              <ul class="pagination justify-content-center mt-4">
+                <li class="page-item" [class.disabled]="currentPage === 0">
+                  <a class="page-link" (click)="prevPage()">Previous</a>
+                </li>
+                <li class="page-item" *ngFor="let page of [].constructor(totalPages); let idx = index" [class.active]="currentPage === idx">
+                  <a class="page-link" (click)="goToPage(idx)">{{ idx + 1 }}</a>
+                </li>
+                <li class="page-item" [class.disabled]="currentPage === totalPages - 1">
+                  <a class="page-link" (click)="nextPage()">Next</a>
+                </li>
+              </ul>
+            </nav>
+  
+          </div> <!-- schedule-tab -->
+        </div>
+      </div>
+    </div>
+  </section>
+  
