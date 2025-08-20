@@ -10,6 +10,8 @@ import { EventForm } from './FrontOffice/event-form/event-form';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Events } from './FrontOffice/events/events';
+import { EventsClient } from './FrontOffice/events-client/events-client';
+import { EventDetail } from './FrontOffice/event-detail/event-detail';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { Events } from './FrontOffice/events/events';
     HeaderFront,
     FooterFront,
     EventForm,
-    Events
+    Events,
+    EventsClient,
+    EventDetail
   ],
   imports: [
     BrowserModule,

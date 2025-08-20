@@ -27,7 +27,8 @@ export class EventForm {
         startDate: new FormControl('', [Validators.required]),
         endDate: new FormControl('', [Validators.required]),
         place: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        capacityMax: new FormControl('', [Validators.required, Validators.min(1)])
+        capacityMax: new FormControl('', [Validators.required, Validators.min(1)]),
+        price : new FormControl('', [Validators.required, Validators.min(0)]),
       },
       { validators: this.dateValidator } // Ajout du validateur global
     );

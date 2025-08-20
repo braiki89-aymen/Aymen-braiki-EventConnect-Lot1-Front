@@ -1,0 +1,84 @@
+<!-- Events Section Begin -->
+<section class="pricing-section set-bg spad" data-setbg="assets/FrontOffice/img/pricing-bg.jpg">
+    <div class="container">
+      
+      <!-- Section Title -->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title">
+            <h2>Upcoming Events</h2>
+            <p>Choose your event and get your ticket</p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Events List -->
+      <div class="row justify-content-center">
+        <div 
+          class="col-lg-4 col-md-8 mb-4" 
+          *ngFor="let event of events">
+          
+          <div class="price-item">
+            <h4>{{ event.title }}</h4>
+            <div class="pi-price">
+              <h2>
+                <span>$</span> {{ event.price }}
+              </h2>
+            </div>
+  
+            <ul>
+                <li> <span> {{ event.title }}</span> </li>
+              <li><i class="fa fa-calendar"></i> {{ event.startDate | date:'dd/MM/yyyy' }} → {{ event.endDate | date:'dd/MM/yyyy' }}</li>
+              <li>{{ event.description | slice:0:100 }}...</li>
+              <li>Capacity: {{ event.capacityMax }}</li>
+            </ul>
+  
+            <button class="price-btn" [routerLink]="['/eventDetail', event.id]">
+              View Details <span class="arrow_right"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <!-- Pagination -->
+    <div class="row mt-4"  *ngIf="!isLoading && totalPages > 1">
+        <div class="col-lg-12">
+          <nav aria-label="Events pagination">
+            <ul class="pagination justify-content-center">
+              
+              <!-- Previous Button -->
+              <li class="page-item" [class.disabled]="currentPage === 0">
+                <button class="site-btn" (click)="prevPage()" [disabled]="currentPage === 0">
+                  <i class="fa fa-chevron-left"></i> Previous
+                </button>
+              </li>
+  
+              <!-- Page Numbers -->
+              <li 
+                class="page-item" 
+                *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i === currentPage"
+              >
+                <button class="site-btn" (click)="goToPage(i)">
+                  {{ i + 1 }}
+                </button>
+              </li>
+  
+              <!-- Next Button -->
+              <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+                <button class="site-btn" (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">
+                  Next <i class="fa fa-chevron-right"></i>
+                </button>
+              </li>
+  
+            </ul>
+          </nav>
+          
+        
+        </div>
+      </div>
+  </section>
+  <!-- Events Section End -->
+  

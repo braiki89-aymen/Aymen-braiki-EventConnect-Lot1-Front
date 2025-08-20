@@ -1,0 +1,31 @@
+<!-- Event Detail Section Begin -->
+<section class="home-about-section spad">
+    <div class="container">
+        <div class="row">
+            <!-- Image de l'événement -->
+            <div class="col-lg-6">
+                <div class="ha-pic">
+                    <img [src]="'assets/FrontOffice/img/EventConnect.png'" alt="{{ eventData?.title }}">
+                </div>
+            </div>
+
+            <!-- Détails de l'événement -->
+            <div class="col-lg-6">
+                <div class="ha-text">
+                    <h2>{{ eventData?.title }}</h2>
+                    <p>{{ eventData?.description }}</p>
+
+                    <ul>
+                        <li><i class="fa fa-calendar"></i> Date: {{ eventData?.startDate | date:'mediumDate' }}</li>
+                        <li><i class="fa fa-map-marker"></i> Location: {{ eventData?.place }}</li>
+                        <li><i class="fa fa-user"></i> Participants: {{ eventData?.nbParticipantsActuels }}/{{ eventData?.capacityMax }}</li>
+                        <li><i class="fa fa-dollar-sign"></i> Price: {{ eventData?.price | currency }}</li>
+                    </ul>
+
+                    <a href="#" class="ha-btn">Reserve</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Event Detail Section End -->

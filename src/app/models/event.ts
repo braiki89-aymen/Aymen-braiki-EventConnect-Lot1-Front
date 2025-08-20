@@ -6,6 +6,6 @@ export class Event {
     endDate!: Date;
     place!: string;
     capacityMax!: number;
-
+    price!: number;
+    nbParticipantsActuels!: number;
 }
-

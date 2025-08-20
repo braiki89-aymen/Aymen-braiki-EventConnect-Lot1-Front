@@ -59,7 +59,7 @@ export class Events {
     this.goToPage(this.currentPage - 1);
   }
 
-  filteredEvents() {
+  filteredEvents() : Event[] {
     if (!this.searchTerm) {
       return this.events;
     }
@@ -69,6 +69,8 @@ export class Events {
       e.place.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
+
+ 
 
 editEvent(id: number) {
     this.router.navigate([''], { queryParams: { id: id } });

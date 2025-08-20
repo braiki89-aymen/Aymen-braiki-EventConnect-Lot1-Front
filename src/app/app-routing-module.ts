@@ -3,12 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllTemplateFront } from './FrontOffice/all-template-front/all-template-front';
 import { EventForm } from './FrontOffice/event-form/event-form';
 import { Events } from './FrontOffice/events/events';
+import { EventsClient } from './FrontOffice/events-client/events-client';
+import { EventDetail } from './FrontOffice/event-detail/event-detail';
 
 const routes: Routes = [
   {path:"", component: AllTemplateFront,
     children: [
       {path:"", component: EventForm},
-      {path:"listEvents", component: Events}, // Assuming you want to use the same component for listing events
+      {path:"listEvents", component: Events},
+      {path:"clientEvents", component: EventsClient},
+      {path:"eventDetail/:id", component: EventDetail}, 
     ]
 
   },

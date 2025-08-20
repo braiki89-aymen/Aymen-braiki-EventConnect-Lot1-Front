@@ -71,6 +71,15 @@
                   <small *ngIf="aForm.get('capacityMax')?.errors?.['min']">Capacity must be at least 1.</small>
                 </div>
               </div>
+
+              <!-- price -->
+              <div class="col-lg-12">
+                <input type="number" formControlName="price" placeholder="price">
+                <div class="text-danger" *ngIf="aForm.get('price')?.touched && aForm.get('price')?.invalid">
+                  <small *ngIf="aForm.get('price')?.errors?.['required']">Capacity is required.</small>
+                  <small *ngIf="aForm.get('price')?.errors?.['min']">price must be positif.</small>
+                </div>
+              </div>
   
               <!-- Submit -->
                
