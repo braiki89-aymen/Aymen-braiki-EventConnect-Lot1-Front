@@ -21,7 +21,20 @@
                         <li><i class="fa fa-user"></i> Participants: {{ eventData?.nbParticipantsActuels }}/{{ eventData?.capacityMax }}</li>
                         <li><i class="fa fa-dollar-sign"></i> Price: {{ eventData?.price | currency }}</li>
                     </ul>
+                    <div class="rating">
+                        <i *ngFor="let star of stars; let i = index"
+                           class="fa-star"
+                           [class.fas]="i < newFeedback.rating"
+                           [class.far]="i >= newFeedback.rating"
+                           (click)="setRating(i+1)">
+                        </i>
+                      </div>
 
+                      <h3>Average : {{ averageRating | number:'1.1-1' }}/5 ⭐</h3>
+
+                    <ul>
+                        
+                    </ul>
                     <a href="#" class="ha-btn">Reserve</a>
                 </div>
             </div>

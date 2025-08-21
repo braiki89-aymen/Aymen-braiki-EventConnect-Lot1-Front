@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { EventService } from '../../services/event-service';
 import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../models/event';
+import { Feedback } from '../../models/feedback';
+import { FeedbackService } from '../../services/feedback-service';
 
 @Component({
   selector: 'app-event-detail',
@@ -11,10 +13,16 @@ import { Event } from '../../models/event';
 })
 export class EventDetail {
 
-  constructor(private event : EventService, private route: ActivatedRoute) { }
-
+  constructor(private event : EventService, private route: ActivatedRoute,
+    private feedbackService: FeedbackService
+  ) { }
+  stars: number[] = [1,2,3,4,5];
+  newFeedback: Feedback = { rating: 0 };
+  rating: number =0;
+  feedbacks : Feedback[] = [];
   id: number = 0;
-  eventData: Event |  undefined;
+  eventData: Event |  undefined 
+  averageRating: number = 0;
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -22,8 +30,11 @@ export class EventDetail {
       if (id) {
         this.id = +id; 
         this.loadEventData(this.id);
+        this.loadFeedbacks(this.id);
       }
     });
+
+    
   }
 
 
@@ -39,7 +50,29 @@ export class EventDetail {
     });
   }
 
+  setRating(value: number) {
+    this.newFeedback.rating = value;
+    this.feedbackService.addFeedback(this.newFeedback, this.id).subscribe(() => {
+      this.loadFeedbacks(this.id);
+      this.newFeedback = { rating: 0 }; 
+    });
+  }
 
+  loadFeedbacks(id: number) {
+    this.feedbackService.getFeedbacksByEvent(id).subscribe(res => this.feedbacks = res);
+    this.feedbackService.getAverageRating(id).subscribe(res => this.averageRating = res);
+  }
+
+  submitFeedback() {
+    if (this.newFeedback) {
+      this.feedbackService.addFeedback(this.newFeedback, this.id).subscribe(() => {
+        this.loadFeedbacks(this.id);
+        this.rating = 0;
+      });
+    } else {
+      console.error("Feedback is undefined. Cannot submit feedback.");
+    }
+  }
 
   
 
