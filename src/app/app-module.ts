@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Events } from './FrontOffice/events/events';
 import { EventsClient } from './FrontOffice/events-client/events-client';
 import { EventDetail } from './FrontOffice/event-detail/event-detail';
+import { Reservation } from './FrontOffice/reservation/reservation';
+import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reservation';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { EventDetail } from './FrontOffice/event-detail/event-detail';
     EventForm,
     Events,
     EventsClient,
-    EventDetail
+    EventDetail,
+    Reservation,
+    CancelReservation
   ],
   imports: [
     BrowserModule,
