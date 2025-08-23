@@ -7,6 +7,8 @@ import { EventsClient } from './FrontOffice/events-client/events-client';
 import { EventDetail } from './FrontOffice/event-detail/event-detail';
 import { Reservation } from './FrontOffice/reservation/reservation';
 import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reservation';
+import { Cancel } from './FrontOffice/cancel/cancel';
+import { Success } from './FrontOffice/success/success';
 
 const routes: Routes = [
   {path:"", component: AllTemplateFront,
@@ -20,6 +22,8 @@ const routes: Routes = [
     ]
 
   },
+  { path: 'success', component: Success },
+  { path: 'cancel', component: Cancel},
 ];
 
 @NgModule({

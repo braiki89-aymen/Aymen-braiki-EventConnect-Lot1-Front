@@ -13,8 +13,8 @@ export class ReservationService {
   private reservationUrl = 'http://localhost:8080/reservation';
 
 
-  addResrvation(reservation: Reservation, id: number) { 
-    return this.http.post(`${this.reservationUrl}/addReservation/${id}`, reservation);
+  addResrvation(reservation: Reservation, id: number): Observable<Reservation> { 
+    return this.http.post<Reservation>(`${this.reservationUrl}/addReservation/${id}`, reservation);
   }
 
   cancelReservation (cancel:any){

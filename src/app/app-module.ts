@@ -14,6 +14,8 @@ import { EventsClient } from './FrontOffice/events-client/events-client';
 import { EventDetail } from './FrontOffice/event-detail/event-detail';
 import { Reservation } from './FrontOffice/reservation/reservation';
 import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reservation';
+import { Cancel } from './FrontOffice/cancel/cancel';
+import { Success } from './FrontOffice/success/success';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reser
     EventsClient,
     EventDetail,
     Reservation,
-    CancelReservation
+    CancelReservation,
+    Cancel,
+    Success
   ],
   imports: [
     BrowserModule,
