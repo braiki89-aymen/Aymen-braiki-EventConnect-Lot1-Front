@@ -71,8 +71,11 @@
                               {{ event.description | slice:0:80 }}...
                             </li>
                             <li>
-                              <i class="fa fa-users"></i> 
+                              <i class="fa fa-users"></i>    
                               Capacity: {{ event.capacityMax }}
+                            </li>
+                            <li>
+                                <button class="site-btn"  [routerLink]="['/listParticipant', event.id]"> Participant</button>
                             </li>
                           </ul>
                         </div>

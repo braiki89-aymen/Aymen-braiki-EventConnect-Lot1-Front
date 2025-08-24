@@ -12,7 +12,7 @@ export class EventService {
 
   private eventUrl = 'http://localhost:8080/events'; // URL to web API
 
-  addEvent(event: Event) {
+  addEvent(event: Event) : Observable<any> {
     return this.http.post<Event>(`${this.eventUrl}/addEvent`, event);
   }
   

@@ -16,6 +16,7 @@ import { Reservation } from './FrontOffice/reservation/reservation';
 import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reservation';
 import { Cancel } from './FrontOffice/cancel/cancel';
 import { Success } from './FrontOffice/success/success';
+import { ListParticipant } from './FrontOffice/list-participant/list-participant';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { Success } from './FrontOffice/success/success';
     Reservation,
     CancelReservation,
     Cancel,
-    Success
+    Success,
+    ListParticipant
   ],
   imports: [
     BrowserModule,

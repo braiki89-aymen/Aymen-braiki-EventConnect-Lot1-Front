@@ -139,10 +139,16 @@ export class EventForm {
             this.router.navigate(['/listEvents']);
           },
           error: (err) => {
-            if (err.status === 409 || err.status === 500) {
+            if (err.status === 409) {
               Swal.fire(
                 'Conflict!',
-                err.error.message,
+                err.error?.message || 'Conflict detected!',
+                'error'
+              );
+            } else if (err.status === 500) {
+              Swal.fire(
+                'Server Error!',
+                err.error?.error || 'Unexpected server error.',
                 'error'
               );
             } else {
@@ -152,6 +158,7 @@ export class EventForm {
                 'warning'
               );
             }
+            
           }
         });
       }

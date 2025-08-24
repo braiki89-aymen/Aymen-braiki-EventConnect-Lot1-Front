@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Event } from '../../models/event';
 import { Feedback } from '../../models/feedback';
 import { FeedbackService } from '../../services/feedback-service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event-detail',
@@ -14,7 +15,8 @@ import { FeedbackService } from '../../services/feedback-service';
 export class EventDetail {
 
   constructor(private event : EventService, private route: ActivatedRoute,
-    private feedbackService: FeedbackService
+    private feedbackService: FeedbackService,
+    
   ) { }
   stars: number[] = [1,2,3,4,5];
   newFeedback: Feedback = { rating: 0 };

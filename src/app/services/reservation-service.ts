@@ -24,5 +24,12 @@ export class ReservationService {
   checkReservation(cancelData: any): Observable<boolean> {
     return this.http.post<boolean>(`${this.reservationUrl}/checkReservation`, cancelData);
   }
+
+  listConfirmed(id :number) : Observable <Reservation []> {
+    return this.http.get<Reservation []>(`${this.reservationUrl}/confirmed/${id}`);
+  }
   
+  listPending(id :number) : Observable <Reservation []> {
+    return this.http.get<Reservation []>(`${this.reservationUrl}/pending/${id}`);
+  }
 }

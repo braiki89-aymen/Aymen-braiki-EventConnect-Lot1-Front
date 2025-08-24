@@ -9,6 +9,7 @@ import { Reservation } from './FrontOffice/reservation/reservation';
 import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reservation';
 import { Cancel } from './FrontOffice/cancel/cancel';
 import { Success } from './FrontOffice/success/success';
+import { ListParticipant } from './FrontOffice/list-participant/list-participant';
 
 const routes: Routes = [
   {path:"", component: AllTemplateFront,
@@ -18,7 +19,8 @@ const routes: Routes = [
       {path:"clientEvents", component: EventsClient},
       {path:"eventDetail/:id", component: EventDetail}, 
       {path:"reservation/:id", component: Reservation}, 
-      {path:"cancelReservation", component: CancelReservation}, 
+      {path:"cancelReservation", component: CancelReservation},
+      {path:"listParticipant/:id", component: ListParticipant}, 
     ]
 
   },
