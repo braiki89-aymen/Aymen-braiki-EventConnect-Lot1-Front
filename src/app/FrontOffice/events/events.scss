@@ -1,0 +1,171 @@
+/* === BOUTONS AMÉLIORÉS === */
+
+/* Groupes de boutons */
+.action-buttons,
+.admin-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+/* Style de base pour tous les boutons */
+.btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Bouton Participants */
+.btn-participant {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-participant:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* Bouton Statistiques */
+.btn-stats {
+  background-color: #9b59b6;
+  color: white;
+}
+
+.btn-stats:hover {
+  background-color: #8e44ad;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(155, 89, 182, 0.3);
+}
+
+/* Bouton Edit */
+.btn-edit {
+  background-color: #f39c12;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #e67e22;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(243, 156, 18, 0.3);
+}
+
+/* Bouton Delete */
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+}
+
+/* Bouton Pagination */
+.btn-pagination {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  margin: 0 4px;
+  min-width: 44px;
+  justify-content: center;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  background-color: #bdc3c7;
+  transform: translateY(-2px);
+}
+
+.btn-pagination.active {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-pagination:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Bouton Add New Event */
+.btn-add {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.4);
+}
+
+.btn-add:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(46, 204, 113, 0.5);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .action-buttons,
+  .admin-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .pagination {
+    flex-wrap: wrap;
+  }
+  
+  .btn-pagination {
+    margin-bottom: 8px;
+  }
+}
+
+/* Amélioration des cartes d'événements */
+.event-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.sc-pic img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.sc-text h4 {
+  color: #2c3e50;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.sc-text ul li {
+  margin-bottom: 8px;
+  color: #7f8c8d;
+}
+
+.sc-widget li {
+  margin-bottom: 10px;
+  color: #34495e;
+}

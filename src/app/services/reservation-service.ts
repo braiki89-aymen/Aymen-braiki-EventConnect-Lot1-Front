@@ -32,4 +32,22 @@ export class ReservationService {
   listPending(id :number) : Observable <Reservation []> {
     return this.http.get<Reservation []>(`${this.reservationUrl}/pending/${id}`);
   }
+
+  confirmReservation(id: number): Observable<any> {
+    return this.http.get<any>(`${this.reservationUrl}/countConfirmed/${id}`);
+  }
+
+  pendingReservation(id: number): Observable<any> {
+    return this.http.get<any>(`${this.reservationUrl}/countPending/${id}`);
+  }
+
+  topParticipant(): Observable<any []> {
+    return this.http.get<any[]>(`${this.reservationUrl}/topParticipant`);
+  }
+
+  countAllReservation(): Observable<any []> {
+    return this.http.get<any[]>(`${this.reservationUrl}/countAllReservation`);
+  }
+
+  
 }

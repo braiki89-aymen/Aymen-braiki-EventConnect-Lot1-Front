@@ -10,6 +10,7 @@ import { CancelReservation } from './FrontOffice/cancel-reservation/cancel-reser
 import { Cancel } from './FrontOffice/cancel/cancel';
 import { Success } from './FrontOffice/success/success';
 import { ListParticipant } from './FrontOffice/list-participant/list-participant';
+import { Statistique } from './FrontOffice/statistique/statistique';
 
 const routes: Routes = [
   {path:"", component: AllTemplateFront,
@@ -26,6 +27,7 @@ const routes: Routes = [
   },
   { path: 'success', component: Success },
   { path: 'cancel', component: Cancel},
+  {path:"statistique/:id", component: Statistique},
 ];
 
 @NgModule({

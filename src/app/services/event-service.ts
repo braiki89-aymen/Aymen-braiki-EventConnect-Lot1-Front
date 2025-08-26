@@ -10,7 +10,7 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  private eventUrl = 'http://localhost:8080/events'; // URL to web API
+  private eventUrl = 'http://localhost:8080/events'; 
 
   addEvent(event: Event) : Observable<any> {
     return this.http.post<Event>(`${this.eventUrl}/addEvent`, event);
@@ -31,7 +31,16 @@ export class EventService {
 
   updateEvent(event: Event, id: number) {
     return this.http.put<Event>(`${this.eventUrl}/update-event/${id}`, event);
+
   }
+
+  countAllEvent(): Observable<any> {
+    return this.http.get<any>(`${this.eventUrl}/countAllEvents`);
+  }
+
+  /*topEvent(): Observable<any []> {
+    return this.http.get<any[]>(`${this.eventUrl}/topEvent`);
+  }*/
   
 }
   
