@@ -4,6 +4,7 @@ export class Reservation {
     emailParticipant!: string;
     nbPlace!: number;
     status!: Status;
+    amount!: number;
 }
 
 

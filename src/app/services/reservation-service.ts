@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Reservation } from '../models/reservation';
 import { Observable } from 'rxjs';
 
@@ -13,9 +13,11 @@ export class ReservationService {
   private reservationUrl = 'http://localhost:8080/reservation';
 
 
-  addResrvation(reservation: Reservation, id: number): Observable<Reservation> { 
-    return this.http.post<Reservation>(`${this.reservationUrl}/addReservation/${id}`, reservation);
+  addReservation(reservation: Reservation, id: number, code?: string): Observable<Reservation> { 
+    let params = code ? new HttpParams().set('code', code) : undefined;
+    return this.http.post<Reservation>(`${this.reservationUrl}/addReservation/${id}`, reservation, { params });
   }
+  
 
   cancelReservation (cancel:any){
     return this.http.post(`${this.reservationUrl}/cancelReservation`, cancel)

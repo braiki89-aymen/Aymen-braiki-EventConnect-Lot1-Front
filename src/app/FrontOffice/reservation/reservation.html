@@ -60,6 +60,13 @@
                   <div *ngIf="aForm.get('nbPlace')?.errors?.['min']">At least 1 spot is required.</div>
                 </div>
               </div>
+
+              <div class="form-group mb-3">
+                <label for="discountCode">Discount Code</label>
+                <input type="text" id="discountCode" class="form-control"
+                       formControlName="discountCode" placeholder="Enter discount code">
+              </div>
+              
   
               <!-- Submit Button -->
               <button type="submit" class="site-btn" [disabled]="aForm.invalid">Reserve</button>

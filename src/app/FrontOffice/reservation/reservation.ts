@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { StripeService } from '../../services/stripe-service';
 import Swal from 'sweetalert2';
 import { StripeRequest } from '../../models/stripe-request';
+import { DiscountService } from '../../services/discount-service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-reservation',
@@ -15,7 +17,7 @@ import { StripeRequest } from '../../models/stripe-request';
 export class Reservation {
 
   constructor(private res : ReservationService, private route: ActivatedRoute,
-    private stripe: StripeService,
+    private stripe: StripeService, private dis : DiscountService
   ){}
   id: number = 0;
   aForm: FormGroup = new FormGroup({});
@@ -37,44 +39,72 @@ export class Reservation {
         lastNameParticipant: new FormControl('', [Validators.required, Validators.minLength(2)]),
         emailParticipant: new FormControl('', [Validators.required, Validators.email]),
         nbPlace: new FormControl('', [Validators.required, Validators.min(1)]),
+        discountCode: new FormControl(''),
       });
   }
 
   onSubmit() {
     if (this.aForm.valid) {
       const reservationData = this.aForm.value;
-      this.res.addResrvation(reservationData, this.id).subscribe({
-        next: (res) => {
-          if (res.status === 'CONFIRMED') {
+      const code = this.aForm.get('discountCode')?.value;
+  
+      // Vérifie le code promo
+      const checkCode$ = code ? this.dis.checkCode(code) : of(true); 
 
-            const res: StripeRequest = {
-              amount: reservationData.nbPlace  * 100, // Montant en cents
-              quantity: reservationData.nbPlace,
-              name: "Reservation " + reservationData.firstNameParticipant,
-              currency: "usd"
-            };
-            
-            this.stripe.checkout(res).subscribe({
-              next: (stripeResponse) => {
-                if (stripeResponse && stripeResponse.sessionUrl) {
-                  window.location.href = stripeResponse.sessionUrl; 
-                }
-              }});
-          } else if (res.status === 'PENDING') {
-            
-            Swal.fire({
-              icon: 'info',
-              title: 'Waiting list',
-              text: 'Your reservation is on hold. You will be notified by email if a place becomes available.',
-              confirmButtonText: 'Ok'
-            });
-          }
+    checkCode$.subscribe({
+      next: (exists: boolean) => {
+        if (!exists) {
+          Swal.fire({
+            title: "Not Found",
+            text: "Invalid Discount Code.",
+            icon: "error"
+          });
+          return; // stop si code invalide
+        }
+  
+          
+          this.res.addReservation(reservationData, this.id, code).subscribe({
+            next: (reservation) => {
+              if (reservation.status === 'CONFIRMED') {
+  
+                const stripeRequest: StripeRequest = {
+                  amount: reservation.amount, 
+                  quantity: reservationData.nbPlace,
+                  name: "Reservation " + reservationData.firstNameParticipant,
+                  currency: "usd"
+                };
+                
+                this.stripe.checkout(stripeRequest).subscribe({
+                  next: (stripeResponse) => {
+                    if (stripeResponse?.sessionUrl) {
+                      window.location.href = stripeResponse.sessionUrl;
+                    }
+                  },
+                  error: () => {
+                    Swal.fire('Erreur Stripe', 'Impossible de créer la session Stripe.', 'error');
+                  }
+                });
+  
+              } else if (reservation.status === 'PENDING') {
+                Swal.fire({
+                  icon: 'info',
+                  title: 'Waiting list',
+                  text: 'Your reservation is on hold. You will be notified by email if a place becomes available.',
+                  confirmButtonText: 'Ok'
+                });
+              }
+            },
+            error: (err) => {
+              Swal.fire('Erreur', err.error?.error || 'Une erreur est survenue', 'error');
+            }
+          });
+  
         },
-        error: (err) => {
-          Swal.fire('Erreur', 'Une erreur est survenue', 'error');
+        error: () => {
+          Swal.fire('Erreur', 'Impossible de vérifier le code promo.', 'error');
         }
       });
-      
     }
   }
+  
 }

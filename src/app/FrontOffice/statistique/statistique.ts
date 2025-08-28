@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Feedback } from '../../models/feedback';
 import { FeedbackService } from '../../services/feedback-service';
 import { Chart } from 'chart.js/auto';
+import { DiscountService } from '../../services/discount-service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -21,7 +23,10 @@ export class Statistique implements OnInit, AfterViewInit {
 
 
   constructor(private res : ReservationService, private event : EventService, 
-    private route : ActivatedRoute , private feedbackService: FeedbackService) { }
+    private route : ActivatedRoute , private feedbackService: FeedbackService,
+    private dis : DiscountService
+  
+  ) { }
 
   confirmedCount: number = 0;
   pendingCount: number = 0;
@@ -169,5 +174,42 @@ export class Statistique implements OnInit, AfterViewInit {
   }
 
   
-  
+sendDiscount(participant: any) {
+  const data = {
+    emailParticipant: participant.emailParticipant,
+    firstNameParticipant: participant.firstNameParticipant,
+    lastNameParticipant: participant.lastNameParticipant
+  };
+
+  this.dis.createDiscount(data).subscribe({
+    next: (response) => {
+      console.log("Discount code sent successfully:", response);
+      Swal.fire('Success', 'Discount code sent!', 'success');
+    },
+    error: (err) => {
+      console.error("Failed to send discount:", err);
+      Swal.fire('Error', 'Failed to send discount code.', 'error');
+    }
+  });
+}
+
+sendFreeAccess(participant: any) {
+  const data = {
+    emailParticipant: participant.emailParticipant,
+    firstNameParticipant: participant.firstNameParticipant,
+    lastNameParticipant: participant.lastNameParticipant
+  };
+
+  this.dis.sendFreeAccessMail(data).subscribe({
+    next: (response) => {
+      console.log("Free access sent successfully:", response);
+      Swal.fire('Success', 'Free access sent!', 'success');
+    },
+    error: (err) => {
+      console.error("Failed to send free access:", err);
+      Swal.fire('Error', 'Failed to send free access.', 'error');
+    }
+  });
+
+} 
 }

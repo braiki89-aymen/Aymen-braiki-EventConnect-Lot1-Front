@@ -129,8 +129,8 @@
               <span class="badge">{{ participant.total }} participations</span>
             </div>
             <div class="mt-4 text-center">
-                <button class="btn btn-success me-2">Free Access</button>
-                <button class="btn btn-warning">Discount</button>
+                <button class="btn btn-success me-2" (click)="sendFreeAccess(participant)">Free Access</button>
+                <button class="btn btn-warning" (click)="sendDiscount(participant)"> Discount </button>
               </div>
           </div>
         </div>
