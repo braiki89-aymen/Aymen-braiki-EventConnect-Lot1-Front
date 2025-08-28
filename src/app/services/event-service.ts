@@ -38,6 +38,10 @@ export class EventService {
     return this.http.get<any>(`${this.eventUrl}/countAllEvents`);
   }
 
+  exportCsv() {
+    return this.http.get(`${this.eventUrl}/export`, { responseType: 'blob' });
+  } 
+
   /*topEvent(): Observable<any []> {
     return this.http.get<any[]>(`${this.eventUrl}/topEvent`);
   }*/

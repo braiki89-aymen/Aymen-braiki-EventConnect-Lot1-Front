@@ -212,4 +212,15 @@ sendFreeAccess(participant: any) {
   });
 
 } 
+
+downloadCsv() {
+  this.event.exportCsv().subscribe((blob: Blob) => {
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'events_dataset.csv';
+    a.click();
+    window.URL.revokeObjectURL(url);
+  });
+}
 }
