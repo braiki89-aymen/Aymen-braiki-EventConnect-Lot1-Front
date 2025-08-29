@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReservationService } from '../../services/reservation-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StripeService } from '../../services/stripe-service';
 import Swal from 'sweetalert2';
 import { StripeRequest } from '../../models/stripe-request';
@@ -17,7 +17,8 @@ import { of } from 'rxjs';
 export class Reservation {
 
   constructor(private res : ReservationService, private route: ActivatedRoute,
-    private stripe: StripeService, private dis : DiscountService
+    private stripe: StripeService, private dis : DiscountService,
+    private router: Router
   ){}
   id: number = 0;
   aForm: FormGroup = new FormGroup({});
@@ -68,7 +69,7 @@ export class Reservation {
               if (reservation.status === 'CONFIRMED') {
   
                 const stripeRequest: StripeRequest = {
-                  amount: reservation.amount, 
+                  amount: reservation.amount * 100 , 
                   quantity: reservationData.nbPlace,
                   name: "Reservation " + reservationData.firstNameParticipant,
                   currency: "usd"
@@ -92,6 +93,7 @@ export class Reservation {
                   text: 'Your reservation is on hold. You will be notified by email if a place becomes available.',
                   confirmButtonText: 'Ok'
                 });
+                this.router.navigate(['/clientEvents']);
               }
             },
             error: (err) => {

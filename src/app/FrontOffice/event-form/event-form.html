@@ -19,6 +19,8 @@
                 <div class="text-danger" *ngIf="aForm.get('title')?.touched && aForm.get('title')?.invalid">
                   <small *ngIf="aForm.get('title')?.errors?.['required']">Title is required.</small>
                   <small *ngIf="aForm.get('title')?.errors?.['minlength']">Title must be at least 3 characters.</small>
+                  <small *ngIf="aForm.get('title')?.errors?.['pattern']">The title must contain only letters and spaces.</small>
+
                 </div>
               </div>
   
@@ -28,6 +30,7 @@
                 <div class="text-danger" *ngIf="aForm.get('place')?.touched && aForm.get('place')?.invalid">
                   <small *ngIf="aForm.get('place')?.errors?.['required']">Place is required.</small>
                   <small *ngIf="aForm.get('place')?.errors?.['minlength']">Place must be at least 3 characters.</small>
+                  <small *ngIf="aForm.get('place')?.errors?.['pattern']">The place must contain only letters and spaces.</small>
                 </div>
               </div>
   
@@ -84,7 +87,7 @@
               <!-- Submit -->
                
               <div class="col-lg-12 text-center">
-                <button type="submit" class="site-btn" [disabled]="aForm.invalid">Create Event</button>
+                <button type="submit" class="site-btn " [disabled]="aForm.invalid">Create Event</button>
                 <button  class="site-btn" routerLink="/listEvents" >Cancel</button>
               </div>
               

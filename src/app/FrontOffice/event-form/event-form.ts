@@ -22,11 +22,11 @@ export class EventForm {
   ngOnInit() {
     this.aForm = new FormGroup(
       {
-        title: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        title: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern('^[a-zA-Z ]*$')]),
         description: new FormControl('', [Validators.required, Validators.minLength(10)]),
         startDate: new FormControl('', [Validators.required]),
         endDate: new FormControl('', [Validators.required]),
-        place: new FormControl('', [Validators.required, Validators.minLength(3)]),
+        place: new FormControl('', [Validators.required, Validators.minLength(3),Validators.pattern('^[a-zA-Z-, ]*$')]),
         capacityMax: new FormControl('', [Validators.required, Validators.min(1)]),
         price : new FormControl('', [Validators.required, Validators.min(0)]),
       },

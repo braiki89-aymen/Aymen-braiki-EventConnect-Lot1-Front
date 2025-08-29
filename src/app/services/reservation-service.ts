@@ -51,6 +51,11 @@ export class ReservationService {
     return this.http.get<any[]>(`${this.reservationUrl}/countAllReservation`);
   }
 
- 
+  incomeByEvent(id: number): Observable<any> {
+    return this.http.get<any>(`${this.reservationUrl}/incomeEvent/${id}`);
+  }
+  totalIncome(): Observable<any> {
+    return this.http.get<any>(`${this.reservationUrl}/totalIncome`);
+  }
   
 }

@@ -36,8 +36,11 @@ export class Statistique implements OnInit, AfterViewInit {
   totalReservations: number = 0;
   feedbacks : Feedback[] = [];
   averageRating: number = 0;
+  incomeEvent: number = 0;
+  totalIncome: number = 0;
   id : number = 0;
   reservationChart: any;
+
 
   ngAfterViewInit() {
     // Le graphique sera initialisé une fois que les données seront chargées
@@ -56,6 +59,9 @@ export class Statistique implements OnInit, AfterViewInit {
     this.loadReservationCounts();
     this.loadEventCount();
     this.loadFeedbacks(this.id);
+    this.getIncomeByEvent(this.id);
+    this.getTotalIncome();
+    
       }
    }); 
 
@@ -171,6 +177,30 @@ export class Statistique implements OnInit, AfterViewInit {
   loadFeedbacks(id: number) {
     this.feedbackService.getFeedbacksByEvent(id).subscribe(res => this.feedbacks = res);
     this.feedbackService.getAverageRating(id).subscribe(res => this.averageRating = res);
+  }
+
+  getIncomeByEvent(id: number) {  
+    this.res.incomeByEvent(id).subscribe({
+      next: (data) => {
+        this.incomeEvent = data;
+        console.log("Income for event loaded:", this.incomeEvent);
+      },
+      error: (err) => {
+        console.error("Failed to load income for event:", err);
+      }
+    });
+  }
+
+  getTotalIncome() {
+    this.res.totalIncome().subscribe({
+      next: (data) => {
+        this.totalIncome = data;
+        console.log("Total income loaded:", this.totalIncome);
+      },
+      error: (err) => {
+        console.error("Failed to load total income:", err);
+      }
+    });
   }
 
   
